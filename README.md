@@ -1,2 +1,275 @@
 # FullStackSteps
 Steps to set up a full stack application with Django in the backend and React/Vite in the frontend
+
+# The Steps
+1. Create a folder to contain entire project; cd to folder
+2. Create virtual environment and "source" it:
+```
+python -m venv .venv
+source .venv/bin/activate
+```
+3. Install Django, psycopg2, and, Django React Framework (optional here, may cause errors if installed too soon):
+```
+pip install django psycopg2 djangorestframework
+```
+4. Make requirements.txt of installed packages:
+```
+pip freeze > requirements.txt
+```
+5. Create Django project:
+```
+python -m django startproject <name of django project folder; e.g., "todo_list_project">
+```
+6. Rename uppermost folder to "backend" or something like "todo_list_backend"
+7. Make directory "static" in backend folder (this is where the React/Vite will put files for the Django to access):
+`mkdir static`
+8. CD into renamed folder
+9. Create Django app:
+```
+python manage.py startapp <app name; e.g., "todo_list_app">
+```
+10. Configure settings.py (in project folder):\
+    a. Register app in INSTALLED_APPS (name of app folder; e.g. "todo_list_app")\
+    b. Set static folder location (after "STATIC_URL = 'static/'":
+    ```
+    STATICFILES_DIRS = [BASE_DIR / 'static']
+    ```
+11. Import "include" and route to app in urls.py (in project folder):\
+     a. import line should now look like:
+     ```
+     from django.urls import path, include
+     ```
+     b. urlpatterns should now have, e.g.,:
+     ```
+     path('', include('todo_list_app.urls'),
+     ```
+12. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
+```
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.homepage),
+]
+```
+13. Create view in views.py to display, "hello world", in homepage, e.g.,:
+```
+from django.shortcuts import render
+from django.http import HttpResponse
+
+def landing_page(request):
+    print('LOADING LANDING PAGE')
+    return HttpResponse("HELLO WORLD!")
+```
+(START DJANGO FOLDER AND CHECK THAT PAGE LOADS):
+```
+python manage.py runserver
+```
+14. cd to "fullstack" folder (i.e., projects root folder and the folder where .venv foder is located)
+15. Create Vite project and name the project whatever the folder should be named, e.g., "frontend". Choose "react" in the selection options that follow (or "react-ts" is using typescript)
+```
+npm create vite
+```
+16. cd into newly created folder
+17. Install Vite dependincies:
+```
+npm install
+```
+18. Configure "vite.config.js" (or "vite.config.ts" if using typescritp) to link with Django. Ensure 'outDir' points to Django's static folder. This configuration will allow Django to see the frontend files:
+```
+export default defineConfig({
+
+  // vite uses this as a prefix for href and src URLs
+  base: '/static/',
+  build: {
+    // this is the folder where vite will generate its output. Make sure django can serve files from here!
+    outDir: '../backend/static',
+    emptyOutDir: true,
+    sourcemap: true, // aids in debugging by giving line numbers and readable code
+  },
+  plugins: [react()]
+})
+```
+
+19. Run the Vite build:
+```
+npm run build
+```
+20. cd to django project folder where 'manage.py' is
+21. Check if everything is setup correctly:
+```
+python manage.py runserver
+```
+22. Setup Vite's package.json file to automatically update changes in Vite's src folder to Django's static folder by adding the following to the scripts section of package.json (don't forget to add a comma if necessary):
+```
+"watch": "vite build --watch"
+```
+23. Create a new terminal (optional) and cd to folder where package.json resides
+24. Start the watch script:
+```
+npm run watch
+```
+25. In models.py, prepare AppUser model:
+```
+from django.contrib.auth.models import AbstractUser
+
+class AppUser(AbstractUser):
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+    )
+
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [] # Email & Password are required by default.
+```
+26. Register AppUser in settings.py:
+```
+AUTH_USER_MODEL = '<app filename>.AppUser'
+```
+27. Set ENGINE to postgresql and NAME to DB name in configure database in settings.py (if not using sqlite, be sure NAME field does not have 'BASE_DIR /' before DB name, otherwise "'PosixPath' has no len()" error is thrown):
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': '<DB name>',
+    }
+}
+```
+28. Import modules for user authentication to views.py:
+```
+from django.contrib.auth import authenticate, login, logout
+```
+29. If Django Rest Framework wasn't installed in step 3 (update requirement.txt if installing here):
+```
+pip install djangorestframework
+```
+30. Import api_view in views.py (api_view is a decorator that tells Django that the view is for the API/AJAX, not regular browser request, and will send/receive JSON data. It can be passed a list as an argument specifying which requests methods the view is allowed to handle, e.g., POST. It also parses data from requests into JSON format accessible with 'request.data'. Since it specifies what request methods are valid, there is no need for if statements to handle different methods):
+```
+from rest_framework.decorators import api_view
+```
+31. Add views (with api_view decorator) for signup, login, logout, whoami
+32. Import serializers in view.py (converts backend data into JSON to send to frontend):
+```
+from django.core import serializers
+
+# Example of how to use:
+data = serializers.serialize("json", [request.user], fields=['email', 'username'])
+# json - serialize as JSON format
+# request.user - data to be serialize
+# fields = [] - (optional) fields from table to include in output 
+```
+33. Add url patterns (paths) to urls.py
+34. Make migrations and migrate
+35. Add signup, login, logout functionality in React (should be separate components or files). Login form should hard reload in order to get CSRF token from Django:
+```
+window.location.reload()
+```
+36. Install axios from frontend folder:
+```
+npm install axios
+```
+37. Import axios into App.jsx:
+```
+import axios from 'axios'
+```
+38. Quit (CTRL-C) and restart watcher:
+```
+npm run watch
+```
+39. Add getCSRFToken function and set default axios header to above App component in App.jsx:
+    copy code from Django docs:
+        https://docs.djangoproject.com/en/4.0/ref/csrf/#acquiring-csrf-token-from-cookie
+```
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+axios.defaults.headers.common['X-CSRFToken'] = csrftoken
+```
+
+# React JuJu
+
+## React Router
+
+1. Install React Router Module (note: '--save' only needed for pre npm5):
+```
+npm install react-router-dom --save
+```
+2. In App.js, import Router components:
+```
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+```
+3. Enclose App() return section in Router component:
+```
+function App() {
+    return (
+        <Router>
+            <div>
+                ...
+            </div>
+        </Router>
+    )
+    }
+}
+```
+4. Add Routes component and have all routes within it:
+```
+function App() {
+    return (
+        <Router>
+            <div>
+                <Routes>
+                    <Route>
+                        ...
+                    </Route>
+                </Routes>
+            </div>
+        </Router>
+    )
+    }
+}
+```
+5. Include the path in each Route component:
+```
+function App() {
+    return (
+        <Router>
+            <div>
+                <Routes>
+                    <Route path="/">
+                        <Homepage />
+                    </Route>
+                </Routes>
+            </div>
+        </Router>
+    )
+    }
+}
+```
+
+# React Bootstrap
+
+1. Import React-Bootstrap and Bootstrap
+```
+npm install react-bootstrap bootstrap
+```
+2. Get component examples from [React-Bootstrap](https://react-bootstrap.github.io/components/alerts)
+
+
+# NOTES
+- API call to Abstract was getting called twice because whoAmI (useEffect) was getting called on page load then again after page loaded. Since I had the API call on page load, it was also getting called twice.
+- API call was getting called whenever entering a char in input field because it useState was setting state of input field on each char input, and refreshing the page, thus making the API call. This seems like it should not be happening since React is supposed to only render the part that needs updating. Need to research further. Can check out commit from Aug 9 with comment "Moved BirdMap component call to homepage.jsx" (hash= 9d69b28...) to see issue. Next commit on Aug 9 is with multi-calls fixed.
