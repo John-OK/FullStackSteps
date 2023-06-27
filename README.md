@@ -32,7 +32,7 @@ mkdir static
 ```
 python manage.py startapp <app name> # e.g., "todo_list_app"
 ```
-9. Configure 'settings.py' (located in project folder from step 5):\
+9. Configure 'settings.py' (located in project folder created in step 5):\
     a. Register app in INSTALLED_APPS by adding name of app folder from step 8. It should look similar to this:
    ```
    INSTALLED_APPS = [
