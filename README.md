@@ -72,8 +72,8 @@ urlpatterns = [
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def landing_page(request):
-    print('LOADING LANDING PAGE')
+def homepage(request):
+    print('LOADING HOMEPAGE')
     return HttpResponse("HELLO WORLD!")
 ```
 (START DJANGO FOLDER AND CHECK THAT PAGE LOADS):
