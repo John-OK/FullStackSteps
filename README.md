@@ -26,11 +26,10 @@ python -m django startproject <name of django project folder; e.g., "todo_list_p
 cd backend
 mkdir static
 ```
-8. CD to "backend" folder:
-`cd ..`
+8. In "backend" folder, :
 9. Create Django app:
 ```
-python manage.py startapp <app name; e.g., "todo_list_app">
+python manage.py startapp <app name> # e.g., "todo_list_app">
 ```
 10. Configure settings.py (in project folder):\
     a. Register app in INSTALLED_APPS (name of app folder; e.g. "todo_list_app")\
