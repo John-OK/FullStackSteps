@@ -49,16 +49,16 @@ python manage.py startapp <app name> # e.g., "todo_list_app"
     ```
     STATICFILES_DIRS = [BASE_DIR / 'static']
     ```
-11. In 'urls.py' (in project folder), import "include" and route to app:\
-     a. import line should now look like:
+10. In 'urls.py' (in project folder),:\
+     a. import "include"; line should now look like:
      ```
      from django.urls import path, include
      ```
-     b. urlpatterns should now have, e.g.,:
+     b. route to app in urlpatterns:
      ```
-     path('', include('todo_list_app.urls'),
+     path('', include('todo_list_app.urls')),
      ```
-12. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
+11. Create "urls.py" file in *app* folder and add route to homepage html file, e.g.,:
 ```
 from django.urls import path
 from . import views
@@ -67,7 +67,7 @@ urlpatterns = [
     path('', views.homepage),
 ]
 ```
-13. Create view in views.py to display, "hello world", in homepage, e.g.,:
+12. Create view in views.py to display, "hello world", in homepage, e.g.,:
 ```
 from django.shortcuts import render
 from django.http import HttpResponse
