@@ -21,7 +21,8 @@ pip freeze > requirements.txt
 python -m django startproject <name of django project folder> #e.g., "todo_list_project"
 ```
 Now, there will be a folder with the name of the project in the current directory as well as a subfolder in the newly created project folder with the same name. Rename the upper most project fodler if desired.
-6. (OPTIONAL) Rename folder with project name to "backend" (or something like that, e.g., "todo_list_backend"): `mv <project name> backend`
+6. (OPTIONAL) Rename folder with project name to "backend" (or something like that, e.g., "todo_list_backend"):\
+`mv <project name> backend`
 7. Make directory "static" in "backend" folder (this is where the React/Vite will put files for the Django to access):
 ```
 cd backend
@@ -31,13 +32,24 @@ mkdir static
 ```
 python manage.py startapp <app name> # e.g., "todo_list_app"
 ```
-9. Configure settings.py (in project folder):\
-    a. Register app in INSTALLED_APPS (name of app folder; e.g. "todo_list_app")\
-    b. Set static folder location (after "STATIC_URL = 'static/'":
+9. Configure 'settings.py' (located in project folder from step 5):\
+    a. Register app in INSTALLED_APPS by adding name of app folder from step 8. It should look similar to this:\
+   ```
+   INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'todo_list_app',
+]
+   ```
+    b. Set static folder location. After "STATIC_URL = 'static/'", add:
     ```
     STATICFILES_DIRS = [BASE_DIR / 'static']
     ```
-10. Import "include" and route to app in urls.py (in project folder):\
+11. In 'urls.py' (in project folder), import "include" and route to app:\
      a. import line should now look like:
      ```
      from django.urls import path, include
@@ -46,7 +58,7 @@ python manage.py startapp <app name> # e.g., "todo_list_app"
      ```
      path('', include('todo_list_app.urls'),
      ```
-11. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
+12. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
 ```
 from django.urls import path
 from . import views
