@@ -2,7 +2,7 @@
 Steps to set up a full stack application with Django in the backend and React/Vite in the frontend
 
 # The Steps
-1. Create a folder to contain entire project; cd to folder
+1. Create a folder to contain entire project (i.e., front and back ends); cd to folder
 2. Create virtual environment and "source" it:
 ```
 python -m venv .venv
@@ -18,26 +18,26 @@ pip freeze > requirements.txt
 ```
 5. Create Django project:
 ```
-python -m django startproject <name of django project folder; e.g., "todo_list_project">
+python -m django startproject <name of django project folder> #e.g., "todo_list_project"
 ```
-6. Rename uppermost folder to "backend" (or something like that, e.g., "todo_list_backend")
+Now, there will be a folder with the name of the project in the current directory as well as a subfolder in the newly created project folder with the same name. Rename the upper most project fodler if desired.
+6. (OPTIONAL) Rename folder with project name to "backend" (or something like that, e.g., "todo_list_backend"): `mv <project name> backend`
 7. Make directory "static" in "backend" folder (this is where the React/Vite will put files for the Django to access):
 ```
 cd backend
 mkdir static
 ```
-8. In "backend" folder, :
-9. Create Django app:
+8. Create Django app (should still be in backend folder):
 ```
-python manage.py startapp <app name> # e.g., "todo_list_app">
+python manage.py startapp <app name> # e.g., "todo_list_app"
 ```
-10. Configure settings.py (in project folder):\
+9. Configure settings.py (in project folder):\
     a. Register app in INSTALLED_APPS (name of app folder; e.g. "todo_list_app")\
     b. Set static folder location (after "STATIC_URL = 'static/'":
     ```
     STATICFILES_DIRS = [BASE_DIR / 'static']
     ```
-11. Import "include" and route to app in urls.py (in project folder):\
+10. Import "include" and route to app in urls.py (in project folder):\
      a. import line should now look like:
      ```
      from django.urls import path, include
@@ -46,7 +46,7 @@ python manage.py startapp <app name> # e.g., "todo_list_app">
      ```
      path('', include('todo_list_app.urls'),
      ```
-12. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
+11. Create "urls.py" in app folder and add route to homepage html file, e.g.,:
 ```
 from django.urls import path
 from . import views
