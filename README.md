@@ -20,10 +20,14 @@ pip freeze > requirements.txt
 ```
 python -m django startproject <name of django project folder; e.g., "todo_list_project">
 ```
-6. Rename uppermost folder to "backend" or something like "todo_list_backend"
-7. Make directory "static" in backend folder (this is where the React/Vite will put files for the Django to access):
-`mkdir static`
-8. CD into renamed folder
+6. Rename uppermost folder to "backend" (or something like that, e.g., "todo_list_backend")
+7. Make directory "static" in "backend" folder (this is where the React/Vite will put files for the Django to access):
+```
+cd backend
+mkdir static
+```
+8. CD to "backend" folder:
+`cd ..`
 9. Create Django app:
 ```
 python manage.py startapp <app name; e.g., "todo_list_app">
