@@ -85,7 +85,7 @@ python manage.py runserver
 ```
 npm create vite
 ```
-16. cd into newly created folder<br/>
+16. CD into newly created folder<br/>
 If using typescript, install typescript:<br/>
 `npm install typescript --save-dev`
 
