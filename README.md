@@ -112,7 +112,7 @@ export default defineConfig({
 ```
 npm run build
 ```
-20. cd to django project folder where 'manage.py' is
+20. CD to django project folder where 'manage.py' is
 21. Check if everything is setup correctly:
 ```
 python manage.py runserver
@@ -143,7 +143,7 @@ class AppUser(AbstractUser):
 ```
 26. Register AppUser in settings.py:
 ```
-AUTH_USER_MODEL = '<app filename>.AppUser'
+AUTH_USER_MODEL = '<app foldername created is step 8>.AppUser'
 ```
 27. Set ENGINE to postgresql and NAME to DB name in configure database in settings.py (if not using sqlite, be sure NAME field does not have 'BASE_DIR /' before DB name, otherwise "'PosixPath' has no len()" error is thrown):
 ```
