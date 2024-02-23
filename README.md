@@ -20,7 +20,8 @@ pip freeze > requirements.txt
 ```
 python -m django startproject <name of django project folder> #e.g., "todo_list_project"
 ```
-Now, there will be a folder with the name of the project in the current directory as well as a subfolder in the newly created project folder with the same name. Rename the upper most project fodler if desired.
+Now, there will be a folder with the name of the project in the current directory as well as a subfolder in the newly created project folder with the same name. Rename the upper most project folder if desired.
+
 6. (OPTIONAL) Rename folder with project name to "backend" (or something like that, e.g., "todo_list_backend"):\
 `mv <project name> backend`
 7. Make directory "static" in "backend" folder (this is where the React/Vite will put files for the Django to access):
