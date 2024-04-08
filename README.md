@@ -86,14 +86,19 @@ python manage.py runserver
 ```
 npm create vite
 ```
-16. CD into newly created folder<br/>
-If using typescript, install typescript:<br/>
-`npm install typescript --save-dev`
 
-17. Install Vite dependincies:
+16. Install Vite dependincies:
 ```
 npm install
 ```
+
+17. CD into newly created folder<br/>
+NOTE: This step may not be needed. First check if typescript is installed locally as a dev dependency:
+`npx tsc -v`
+If there is no error, and a version number is returned, there is no need to install typescript, and you can skip to the next step. Oterwise, if an error is returned, continue with this step.
+If using typescript, install typescript:<br/>
+`npm install typescript --save-dev`
+
 18. Configure "vite.config.js" (or "vite.config.ts" if using typescritp) to link with Django. Ensure 'outDir' points to Django's static folder. This configuration will allow Django to see the frontend files (be sure the "outDir" points to your static file; "backend" should be replaced with the directory name of your Django project directory):
 ```
 export default defineConfig({
