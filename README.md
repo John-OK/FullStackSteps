@@ -123,7 +123,7 @@ npm run build
 ```
 python manage.py runserver
 ```
-22. Setup Vite's package.json file to automatically update changes in Vite's src folder to Django's static folder by adding the following to the scripts section of package.json (don't forget to add a comma if necessary):
+22. Setup Vite's `package.json` file to automatically update changes in Vite's src folder to Django's static folder by adding the following to the scripts section of `package.json` (don't forget to add a comma if necessary):
 ```
 "watch": "vite build --watch"
 ```
