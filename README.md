@@ -10,7 +10,7 @@ source .venv/bin/activate
 ```
 3. Install Django, psycopg3 (PostgreSQL adapter for Python) (use psycopg2 if using Python < v3.8), and, Django React Framework (optional here, may cause errors if installed too soon):
 ```
-pip install django psycopg2 djangorestframework
+pip install django psycopg3 djangorestframework
 ```
 4. Make requirements.txt of installed packages:
 ```
