@@ -152,6 +152,7 @@ class AppUser(AbstractUser):
 AUTH_USER_MODEL = '<app foldername created is step 8>.AppUser'
 ```
 27. Set ENGINE to postgresql and NAME to DB name in configure database in settings.py (if not using sqlite, be sure NAME field does not have 'BASE_DIR /' before DB name, otherwise "'PosixPath' has no len()" error is thrown):
+NOTE: To create a database from the Linux CLI: `createdb <database_name>`
 ```
 DATABASES = {
     'default': {
