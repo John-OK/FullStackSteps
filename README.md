@@ -147,7 +147,7 @@ class AppUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [] # Email & Password are required by default.
 ```
-27. Register AppUser in settings.py:
+27. Register AppUser in settings.py (put between 'DATABASES' AND 'AUTH_PASSWORD_VALIDATORS'):
 ```
 AUTH_USER_MODEL = '<app foldername created is step 8>.AppUser'
 ```
