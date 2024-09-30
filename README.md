@@ -8,9 +8,9 @@ Steps to set up a full stack application with Django in the backend and React/Vi
 python -m venv .venv
 source .venv/bin/activate
 ```
-3. Install Django, psycopg3 (PostgreSQL adapter for Python) (use psycopg2 if using Python < v3.8), and, Django React Framework (optional here, may cause errors if installed too soon):
+3. Install Django, psycopg (PostgreSQL adapter for Python) (use psycopg v2 if using Python < v3.8), and, Django React Framework (optional here, may cause errors if installed too soon):
 ```
-pip install django psycopg3 djangorestframework
+pip install django psycopg djangorestframework
 ```
 4. Make requirements.txt of installed packages:
 ```
