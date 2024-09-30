@@ -87,19 +87,19 @@ python manage.py runserver
 npm create vite
 ```
 
-16. CD into newly created folder<br/>
+16. CD into newly created folder (e.g., "frontend")<br/>
 
-17. Install Vite dependincies:
+17. Install Vite dependencies:
 ```
 npm install
 ```
-NOTE: This step may not be needed. First check if typescript is installed locally as a dev dependency:
+18. NOTE: This step may not be needed. First check if typescript is installed locally as a dev dependency:
 `npx tsc -v`
-If there is no error, and a version number is returned, there is no need to install typescript, and you can skip to the next step. Oterwise, if an error is returned, continue with this step.
+If there is no error, and a version number is returned, there is no need to install typescript, and you can skip to the next step. Otherwise, if an error is returned, continue with this step.
 If using typescript, install typescript:<br/>
 `npm install typescript --save-dev`
 
-18. Configure "vite.config.js" (or "vite.config.ts" if using typescritp) to link with Django. Ensure 'outDir' points to Django's static folder. This configuration will allow Django to see the frontend files (be sure the "outDir" points to your static file; "backend" should be replaced with the directory name of your Django project directory):
+19. Configure "vite.config.js" (or "vite.config.ts" if using typescritp) to link with Django. Ensure 'outDir' points to Django's static folder. This configuration will allow Django to see the frontend files (be sure the "outDir" points to your static file; "backend" should be replaced with the directory name of your Django project directory):
 ```
 export default defineConfig({
 
@@ -114,25 +114,25 @@ export default defineConfig({
   plugins: [react()]
 })
 ```
-19. Run the Vite build:
+20. Run the Vite build (NOTE: we use `npm run build` here instead of `npm run dev` because the development environment won't output to Django's 'static' folder):
 ```
 npm run build
 ```
-20. CD to django project folder where 'manage.py' is
-21. Check if everything is setup correctly:
+21. CD to django project folder where 'manage.py' is
+2. Check if everything is setup correctly:
 ```
 python manage.py runserver
 ```
-22. Setup Vite's `package.json` file to automatically update changes in Vite's src folder to Django's static folder by adding the following to the scripts section of `package.json` (don't forget to add a comma if necessary):
+23. Setup Vite's `package.json` file to automatically update changes in Vite's src folder to Django's static folder by adding the following to the scripts section of `package.json` (don't forget to add a comma if necessary):
 ```
 "watch": "vite build --watch"
 ```
-23. Create a new terminal (optional) and cd to folder where package.json resides
-24. Start the watch script:
+24. Create a new terminal (optional) and cd to folder where package.json resides
+25. Start the watch script:
 ```
 npm run watch
 ```
-25. In models.py, prepare AppUser model:
+26. In models.py, prepare AppUser model:
 ```
 from django.contrib.auth.models import AbstractUser
 
@@ -147,7 +147,7 @@ class AppUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [] # Email & Password are required by default.
 ```
-26. Register AppUser in settings.py:
+27. Register AppUser in settings.py:
 ```
 AUTH_USER_MODEL = '<app foldername created is step 8>.AppUser'
 ```
@@ -160,20 +160,20 @@ DATABASES = {
     }
 }
 ```
-28. Import modules for user authentication to views.py:
+29. Import modules for user authentication to views.py:
 ```
 from django.contrib.auth import authenticate, login, logout
 ```
-29. If Django Rest Framework wasn't installed in step 3 (update requirement.txt if installing here):
+30. If Django Rest Framework wasn't installed in step 3 (update requirement.txt if installing here):
 ```
 pip install djangorestframework
 ```
-30. Import api_view in views.py (api_view is a decorator that tells Django that the view is for the API/AJAX, not regular browser request, and will send/receive JSON data. It can be passed a list as an argument specifying which requests methods the view is allowed to handle, e.g., POST. It also parses data from requests into JSON format accessible with 'request.data'. Since it specifies what request methods are valid, there is no need for if statements to handle different methods):
+31. Import api_view in views.py (api_view is a decorator that tells Django that the view is for the API/AJAX, not regular browser request, and will send/receive JSON data. It can be passed a list as an argument specifying which requests methods the view is allowed to handle, e.g., POST. It also parses data from requests into JSON format accessible with 'request.data'. Since it specifies what request methods are valid, there is no need for if statements to handle different methods):
 ```
 from rest_framework.decorators import api_view
 ```
-31. Add views (with api_view decorator) for signup, login, logout, whoami
-32. Import serializers in view.py (converts backend data into JSON to send to frontend):
+32. Add views (with api_view decorator) for signup, login, logout, whoami
+33. Import serializers in view.py (converts backend data into JSON to send to frontend):
 ```
 from django.core import serializers
 
@@ -183,25 +183,25 @@ data = serializers.serialize("json", [request.user], fields=['email', 'username'
 # request.user - data to be serialize
 # fields = [] - (optional) fields from table to include in output 
 ```
-33. Add url patterns (paths) to urls.py
-34. Make migrations and migrate
-35. Add signup, login, logout functionality in React (should be separate components or files). Login form should hard reload in order to get CSRF token from Django:
+34. Add url patterns (paths) to urls.py
+35. Make migrations and migrate
+36. Add signup, login, logout functionality in React (should be separate components or files). Login form should hard reload in order to get CSRF token from Django:
 ```
 window.location.reload()
 ```
-36. Install axios from frontend folder:
+37. Install axios from frontend folder:
 ```
 npm install axios
 ```
-37. Import axios into App.jsx:
+38. Import axios into App.jsx:
 ```
 import axios from 'axios'
 ```
-38. Quit (CTRL-C) and restart watcher:
+39. Quit (CTRL-C) and restart watcher:
 ```
 npm run watch
 ```
-39. Add getCSRFToken function and set default axios header to above App component in App.jsx:
+40. Add getCSRFToken function and set default axios header to above App component in App.jsx:
     copy code from Django docs:
         https://docs.djangoproject.com/en/4.0/ref/csrf/#acquiring-csrf-token-from-cookie
 ```
