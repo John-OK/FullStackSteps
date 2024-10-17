@@ -2,7 +2,8 @@
 Steps to set up a full stack application with Django in the backend and React/Vite in the frontend
 
 # The Steps
-1. Create a folder to contain entire project (i.e., front and back ends); cd to folder
+0. (OPTIONAL but highly recommended)Go to GitHub and start a new repository. When creating it, be sure to add .gitignore file using the python template (for a Django project), a license (MIT if unsure), and at least a short description of the project. Then on your local system go to the directory where you want your project folder to be in and run `git clone <get the URL from your github repo page>`
+1. Create a folder to contain entire project (i.e., front and back ends); cd to folder (If you cloned your project, just cd into the folder.)
 2. Create virtual environment and "source" it:
 ```
 python -m venv .venv
